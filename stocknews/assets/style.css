@@ -1,0 +1,776 @@
+:root{--bg:#FBFBFB;--surface:#FFFFFF;--band:#FFF6EA;--fg:#020817;--muted:#737373;--line:#E6E6E6;--chip:#F5F5F6;--orange:#FF9F1A;--orange-ink:#A85F00;--pink:#FF1F53;--pink-ink:#D1123F;--new-bg:#FFE8EE;--major-bg:#FFF1DE;--major-fg:#8A4F00;--up:#0B6E4F;--down:#D1123F;--ai:#EEF0FF;--ai-ink:#3B3F99;--grad:linear-gradient(90deg,#FFC000 0%,#FF9F1A 28%,#FF8040 48%,#FF5F5F 68%,#FF3B6E 84%,#FF2F8A 100%);--gutter:max(16px,env(safe-area-inset-left));color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#020817;--surface:#0B1222;--band:#14111C;--fg:#F1F5F9;--muted:#94A3B8;--line:#1E293B;--chip:#111A2E;--orange-ink:#FFB347;--pink-ink:#FF6B8B;--new-bg:#3A0F1C;--major-bg:#2A1C08;--major-fg:#FFC170;--up:#4ADE9B;--down:#FF6B8B;--ai:#171B3A;--ai-ink:#B4B8FF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#020817;--surface:#0B1222;--band:#14111C;--fg:#F1F5F9;--muted:#94A3B8;--line:#1E293B;--chip:#111A2E;--orange-ink:#FFB347;--pink-ink:#FF6B8B;--new-bg:#3A0F1C;--major-bg:#2A1C08;--major-fg:#FFC170;--up:#4ADE9B;--down:#FF6B8B;--ai:#171B3A;--ai-ink:#B4B8FF;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%;overflow-x:hidden}
+a{color:inherit}
+a:hover{color:var(--pink-ink)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 45%,transparent);outline-offset:2px}
+.logo-dark{display:none!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-light{display:none!important}:root:not([data-theme="light"]) .logo-dark{display:block!important}}
+:root[data-theme="dark"] .logo-light{display:none!important}
+:root[data-theme="dark"] .logo-dark{display:block!important}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
+.wide{max-width:1440px;margin:0 auto;padding:0 var(--gutter)}
+.news{font-family:Newsreader,Georgia,"Times New Roman",serif}
+.num{font-variant-numeric:tabular-nums}
+.banner{background:var(--new-bg);color:var(--pink-ink);font-size:13px;font-weight:600;text-align:center;padding:8px 16px}
+.mast{background:var(--surface);border-bottom:1px solid var(--line)}
+.mast-top{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:22px;padding-bottom:16px;text-align:center;position:relative}
+.mast-top img{height:52px;width:auto;display:block}
+.tagline{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.theme-btn{position:absolute;right:var(--gutter);top:18px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600}
+.rule{height:4px;background:var(--grad)}
+.mast-body{display:grid;gap:14px;padding-top:18px;padding-bottom:18px}
+.dateline{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-top:1px solid var(--fg);border-bottom:1px solid var(--fg);padding:7px 0}
+.live{color:var(--pink-ink);display:inline-flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--pink);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.titlebar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:end;justify-content:space-between}
+h1.title{margin:0;font-size:clamp(30px,4.6vw,56px);font-weight:800;letter-spacing:-.025em;line-height:1.05;text-wrap:balance}
+.label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-ink)}
+.seg{display:inline-flex;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+.seg button.on{background:var(--orange);color:#020817}
+.chip{font-size:11.5px;font-weight:600;color:var(--fg);background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 11px;display:inline-block;text-decoration:none;white-space:nowrap}
+.chip.on{background:var(--orange);border-color:var(--orange);color:#020817}
+.updates{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:6px 12px;flex-wrap:wrap;border-top:4px solid var(--sec-rule,var(--fg));border-bottom:1px solid var(--fg);padding:10px 0 9px;margin:0 0 20px;position:relative}
+.sec::after{content:"";position:absolute;left:0;bottom:-3px;width:72px;height:3px;background:var(--grad)}
+.sec h2{font-family:Newsreader,Georgia,serif;font-size:clamp(25px,3vw,34px);font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.1;text-wrap:balance}
+.sec .meta{font-size:12.5px;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+a.card{text-decoration:none;display:grid;gap:8px;align-content:start}
+a.card:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(2,8,23,.05),0 12px 28px -16px rgba(2,8,23,.22);border-color:color-mix(in srgb,var(--orange) 45%,var(--line));color:inherit}
+.ai{background:var(--ai);border:1px solid color-mix(in srgb,var(--ai-ink) 25%,var(--line));border-radius:14px;padding:16px;display:grid;gap:8px}
+.ai-tag{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ai-ink)}
+.up{color:var(--up)}.down{color:var(--down)}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:999px;padding:2px 8px;display:inline-block}
+.b-new{background:var(--new-bg);color:var(--pink-ink)}
+.b-major{background:var(--major-bg);color:var(--major-fg)}
+.mono{width:30px;height:30px;border-radius:8px;background:var(--chip);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;flex:none}
+.src-line{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.src-line b{color:var(--fg);font-weight:600}
+.hl{font-family:Newsreader,Georgia,serif;font-size:19px;font-weight:700;line-height:1.28;letter-spacing:-.01em;text-wrap:balance}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#020817;border:0;border-radius:8px;padding:10px 14px;font-size:14px;font-weight:600;text-decoration:none;transition:background .15s ease,color .15s ease}
+.btn:hover{background:var(--pink);color:#FFFFFF}
+.ghost{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13px;font-weight:600;text-decoration:none}
+.ghost:hover{border-color:color-mix(in srgb,var(--orange) 45%,var(--line))}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;white-space:nowrap;flex:none}
+.tabs button.on{background:var(--orange);border-color:var(--orange);color:#020817}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(var(--min,260px),1fr))}
+.tile .lab{display:flex;justify-content:space-between;gap:6px;align-items:flex-start;flex-wrap:wrap}
+.tile b{display:block;font-size:20px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;margin-top:4px}
+.small{font-size:11.5px;color:var(--muted);margin-top:6px}
+.delay{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-radius:6px;padding:2px 6px;background:var(--chip);border:1px solid var(--line);white-space:nowrap}
+.bar{height:8px;border-radius:4px;background:var(--chip);overflow:hidden;display:flex}
+.bar span{display:block;height:100%}
+.mv{font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--chip);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mv.new{background:var(--new-bg);color:var(--pink-ink)}
+.mv.rk-up{color:var(--up);background:color-mix(in srgb,var(--up) 12%,transparent)}
+.mv.rk-down{color:var(--down);background:color-mix(in srgb,var(--down) 12%,transparent)}
+.mv.rk-same,.mv.rk-none{color:var(--muted)}
+.rr .mid .mv.rk-up{color:var(--up)}.rr .mid .mv.rk-down{color:var(--down)}.rr .mid .mv.new{color:var(--pink-ink)}
+.gap-na{color:var(--muted);font-weight:500}
+.nm-t{display:inline-block;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom;color:var(--muted);font-size:13px}
+.fl{position:relative;cursor:help;white-space:nowrap;border-bottom:1px dotted var(--muted);outline:0}
+.fl.na{color:var(--muted);font-weight:500}
+.fl-old{font-size:10.5px;font-weight:700;color:var(--major-fg);background:var(--major-bg);border-radius:999px;padding:1px 6px;margin-left:4px}
+.fl:focus::after,.fl:hover::after{content:attr(data-tip);position:absolute;right:0;top:calc(100% + 6px);z-index:20;white-space:nowrap;font-size:12px;font-weight:500;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 9px;box-shadow:0 6px 18px rgba(2,8,23,.14)}
+.swatch{width:10px;height:10px;border-radius:3px;background:var(--brand);display:inline-block;flex:none}
+.tick{font-weight:800;border:0;background:none;padding:0;font-size:15px}
+.tick:hover{color:var(--pink-ink)}
+/* split layout */
+.split{display:grid;grid-template-columns:330px minmax(0,1fr);gap:24px;align-items:start;padding-top:24px;padding-bottom:40px}
+.split.collapsed{grid-template-columns:84px minmax(0,1fr)}
+.rail{position:sticky;top:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;max-height:calc(100vh - 24px);display:flex;flex-direction:column}
+.rail-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--fg)}
+.rail-head .news{font-size:20px;font-weight:800}
+.rail-list{overflow-y:auto;overscroll-behavior:contain}
+.rr{display:grid;grid-template-columns:22px 62px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:10px 12px;position:relative}
+.rr:hover{background:var(--chip)}
+.rr.sel{background:color-mix(in srgb,var(--brand) 11%,var(--surface))}
+.rr.sel::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--brand)}
+.rr .rk{font-size:12px;font-weight:700;color:var(--muted)}
+.rr .tk{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13.5px}
+.rr .mid{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--muted)}
+.rr .pc{font-size:13px;font-weight:700}
+.collapsed .rr{grid-template-columns:1fr;justify-items:center;gap:2px;padding:8px 4px}
+.collapsed .rr .rk,.collapsed .rr .mid,.collapsed .rail-head .news,.collapsed .rail-foot{display:none}
+.collapsed .rr .pc{font-size:11px}
+.collapsed .rr .tk{font-size:12px}
+.collapsed .rail-head{justify-content:center}
+.rail-foot{padding:10px 12px;font-size:12px;color:var(--muted)}
+.content{display:grid;gap:36px;min-width:0}
+.focus-head{border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.focus-head .stripe{height:6px;background:var(--brand)}
+.focus-body{display:grid;gap:12px;padding:18px}
+.fh-title{margin:0;font-size:clamp(30px,4.4vw,56px);font-weight:800;letter-spacing:-.025em;line-height:1.02}
+.cat{display:grid;grid-template-columns:6px minmax(0,1fr);gap:14px;padding:0;overflow:hidden}
+.cat .in{display:grid;gap:6px;padding:13px 14px 13px 0}
+.row-wrap{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+/* full page table */
+.tbl-box{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;min-width:720px}
+.tbl th{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 10px;border-bottom:1px solid var(--fg);white-space:nowrap}
+.tbl th.l,.tbl td.l{text-align:left}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl tr:hover td{background:var(--chip)}
+.stack{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;padding-top:28px;padding-bottom:40px}
+.content>*,.stack>*,section,section>*,.focus-body>*{min-width:0}
+.content{grid-template-columns:minmax(0,1fr)}
+.chip{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+/* stock page */
+.stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:12px 16px;border-bottom:1px solid var(--line);text-decoration:none}
+.lrow .t{font-family:Newsreader,Georgia,serif;font-size:17px;font-weight:600;line-height:1.3}
+.lrow .w{font-size:12px;color:var(--muted);white-space:nowrap}
+.foot{background:var(--surface);border-top:1px solid var(--line)}
+.foot .wrap{display:grid;gap:8px;padding-top:24px;padding-bottom:30px;font-size:12.5px;color:var(--muted)}
+.foot img{height:34px;width:auto}
+.bp{position:fixed;right:10px;bottom:10px;z-index:9;background:var(--fg);color:var(--bg);font-size:11px;font-weight:700;border-radius:999px;padding:5px 10px;opacity:.85;pointer-events:none}
+/* breakpoints */
+@media (max-width:1180px){.split{grid-template-columns:290px minmax(0,1fr)}}
+@media (max-width:980px){
+  .split,.split.collapsed{grid-template-columns:minmax(0,1fr);gap:18px;padding-top:16px}
+  .rail{position:sticky;top:0;z-index:5;max-height:none;border-radius:0 0 14px 14px;margin:0 calc(-1 * var(--gutter));border-left:0;border-right:0;border-top:0}
+  .rail-head{padding:8px var(--gutter)}
+  .rail-list{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:thin}
+  .rr,.collapsed .rr{grid-template-columns:auto;justify-items:start;gap:2px;min-width:96px;width:auto;flex:none;border-bottom:0;border-right:1px solid var(--line);padding:8px 12px;scroll-snap-align:start}
+  .rr .rk,.rr .mid{display:none}
+  .rr.sel::before{left:0;right:0;top:auto;bottom:0;width:auto;height:4px}
+  .collapsed .rail-list,.rail-foot{display:none}
+  .collapsed .rail-head .news{display:inline}
+  .collapsed .rail-head{justify-content:space-between}
+}
+@media (max-width:640px){
+  body{font-size:14.5px}
+  .mast-top img{height:42px}
+  .theme-btn{position:static;order:3}
+  .titlebar .seg{width:100%}
+  .titlebar .seg button{flex:1}
+  .card{padding:14px}
+  .hl{font-size:18px}
+  .grid{--min:100%}
+  .grid.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lrow{grid-template-columns:1fr}
+  .content{gap:30px}
+}
+/* Wide layout: desktops and anything wider than a landscape tablet */
+.x{display:none}
+.viewing{font-size:15px;color:var(--muted);font-weight:500;margin-top:6px;min-height:1em}
+.kicker.brand{margin-bottom:4px}
+.duo{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
+.market-view>*,.duo>*,.content>*{min-width:0}
+.rr .mid .mv{font-size:12.5px;color:var(--muted)}
+@media (min-width:1181px){
+  .wrap,.wide{max-width:2400px;padding:0 clamp(24px,2.2vw,44px)}
+  .mast-top{flex-direction:row;justify-content:flex-start;align-items:center;gap:18px;padding-top:12px;padding-bottom:10px;text-align:left}
+  .mast-top img{height:40px}
+  .theme-btn{top:50%;transform:translateY(-50%)}
+  .mast-body{gap:10px;padding-top:12px;padding-bottom:14px}
+  .titlebar{align-items:end}
+  h1.title{font-size:clamp(30px,2.6vw,46px)}
+  .split{grid-template-columns:minmax(560px,34%) minmax(0,1fr);gap:28px}
+  .rail .x{display:block}
+  .rr{grid-template-columns:24px 62px minmax(0,1fr) 70px 62px 62px 62px 80px;gap:8px;padding:9px 12px}
+  .rr .lt{white-space:nowrap}
+  .rr .mid .mv{justify-self:start}
+  .rr .px,.rr .ch,.rr .pc,.rr .vo,.rr .lt{text-align:right;font-size:13px}
+  .rr .ch{font-weight:700}
+  .rr .vo,.rr .lt{color:var(--muted);font-weight:600}
+  .rr .mid{display:grid;gap:1px}
+  .rr .mid .nm{font-size:12.5px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rr .mid .mv{font-size:11.5px}
+  .rr.rr-cols{display:grid;position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--fg);padding-top:7px;padding-bottom:7px}
+  .rr.rr-cols span{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .rr.rr-cols span:nth-child(n+4){text-align:right}
+  .rail-head{gap:12px}.rail-head .small{text-align:right}
+}
+@media (min-width:1700px){
+  .split{grid-template-columns:minmax(620px,32%) minmax(0,1fr)}
+  .duo{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+}
+/* World clocks and company swatches */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mast-tools{position:absolute;right:var(--gutter);top:14px;display:flex;align-items:center;gap:10px}
+.mast-tools .theme-btn{position:static;transform:none}
+.clocks{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.clk{display:grid;gap:1px;padding:5px 12px;text-align:left;min-width:0}
+.clk+.clk{border-left:1px solid var(--line)}
+.clk-city,.clk-sel{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.clk-sel{border:0;background:transparent;padding:0;margin:0;font-family:inherit;cursor:pointer;max-width:170px;color:var(--fg)}
+.clk-sel:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.clk-row{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.clk-time{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.clk-zone{font-size:11px;font-weight:600;color:var(--muted)}
+/* improvement 10: which zone the site's times are shown in (needs script, so hidden without it) */
+.tz-sw{display:none;align-items:center;gap:4px;padding:5px 10px;border-left:1px solid var(--line)}
+html.js .tz-sw{display:flex}
+.tz-k{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.tz-b{font:inherit;font-size:12px;font-weight:700;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:3px 9px;cursor:pointer;white-space:nowrap;min-height:28px}
+.tz-b.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tz-b:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.tz-ab{font-weight:600;opacity:.75}
+html[data-tzmode=city] .updates .label::after{content:" · New York time"}   /* the schedule stays New York */
+@media (max-width:640px){.clocks{flex-wrap:wrap}.tz-sw{flex-basis:100%;justify-content:center;border-left:0;border-top:1px solid var(--line)}}
+.swatch{box-shadow:0 0 0 1px color-mix(in srgb,var(--fg) 18%,transparent)}
+@media (max-width:1180px){.mast-tools{position:static;order:3;flex-wrap:wrap;justify-content:center}.clk{padding:4px 10px}.clk-time{font-size:15px}}
+@media (min-width:1181px){.mast-tools{top:50%;transform:translateY(-50%)}}
+@media (max-width:640px){.clocks{width:100%}.clk{flex:1}.clk-sel{max-width:none}}
+/* Market conditions: one tidy block on wide screens */
+@media (min-width:1181px){
+  .conds .grid.tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .conds .sumcards{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+/* Grab latest news */
+.tb-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.grab{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px}
+.grab-btn{border:0;border-radius:999px;padding:8px 16px;font-weight:800;font-size:13px;background:var(--fg);color:var(--bg);cursor:pointer}
+.grab-btn[disabled]{opacity:.55;cursor:progress}
+.lock-btn{border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-weight:600;font-size:12.5px;background:var(--surface);color:var(--fg);cursor:pointer}
+.grab-timer{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:var(--muted);min-width:0}
+.grab-note{flex-basis:100%;text-align:right;font-size:12px;color:var(--muted);min-height:1em}
+@media (max-width:860px){.tb-right{align-items:stretch;width:100%}.grab{justify-content:flex-start}.grab-note{text-align:left}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* desktop split view: the rail beside it already shows each name, shares and last trade, so the Top 20 table drops those to fit */
+@media (min-width:1181px) and (max-width:1799px){.top-table .nm-t{display:none}.top-table .tbl th,.top-table .tbl td{padding-left:7px;padding-right:7px}.top-table .tbl th:nth-child(n+9),.top-table .tbl td:nth-child(n+9){display:none}}
+
+/* Full Top 20 view (desktop): every column, opened from the rail head, closed by a click outside */
+.rh-l{display:inline-flex;align-items:center;gap:8px}
+.t20-full{display:none;place-items:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;padding:0}
+.t20-full:hover{background:var(--chip)}
+.t20-full:focus-visible,.t20-close:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+.t20-modal{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100vw;height:100vh;margin:0;overflow:auto}
+.t20-modal::backdrop{background:rgba(2,8,23,.55);backdrop-filter:blur(2px)}
+.t20-box{position:relative;margin:4vh auto;width:min(1500px,calc(100vw - 48px));background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:16px;padding:18px 22px 20px;box-shadow:0 24px 70px rgba(2,8,23,.35)}
+.t20-close{position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:15px;cursor:pointer}
+.t20-close:hover{background:var(--chip)}
+.top-full .sec{padding-right:0}
+.top-full .nm-t{max-width:260px}
+.top-full .tbl-box{overflow-x:auto}
+@media (min-width:1181px){.t20-full{display:inline-grid}}
+/* ---------------------------------------------------------------- phones and tablets (improvement 9)
+   "Tab mode" is set by the page script below 1024px, up to 1180px in portrait, or on a tablet held sideways. Four sections
+   (Top 20, News, Markets, Strength); a stock opens on its own with "Back to Top 20". Without script
+   the page keeps the single long layout above. Tablets in landscape and desktops keep the split view. */
+.mtabs,.back-t20{display:none}
+html.tabmode .mtabs{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:8;gap:4px;padding:8px var(--gutter);margin:0 calc(-1 * var(--gutter));
+  background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+html.tabmode .mtabs a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14px;padding:10px 6px;border-radius:999px;color:var(--muted);min-height:44px;display:grid;place-items:center}
+html.tabmode .mtabs a.on{background:var(--fg);color:var(--bg)}
+html.tabmode .mtabs a:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+html.tabmode .wide{padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+html.tabmode .split,html.tabmode .split.collapsed{grid-template-columns:minmax(0,1fr);gap:18px;padding-top:14px}
+html.tabmode [data-v]:not(button){display:none}   /* the section wrappers only; news filter buttons also carry data-v (round 25) */
+html.tabmode[data-view=top] [data-v=top],html.tabmode[data-view=news] [data-v=news],
+html.tabmode[data-view=markets] [data-v=markets],html.tabmode[data-view=strength] [data-v=strength]{display:block}
+html.tabmode[data-view=top] .rail{display:flex}
+html.tabmode .top-table{display:none}
+html.tabmode .duo{gap:22px}
+html.tabmode[data-view=top] .content{display:none}
+html.tabmode[data-view=stock] .market-view{display:none}
+html.tabmode[data-view=stock] .back-t20{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px;text-decoration:none}
+/* the Top 20 list, full width, with every column */
+html.tabmode .rail{position:static;max-height:none;margin:0;border:1px solid var(--line);border-radius:14px}
+html.tabmode .rail-head{padding:10px 14px}
+html.tabmode .rail-list{display:block;overflow:visible}
+html.tabmode .rail .x{display:block}
+html.tabmode .rr,html.tabmode .collapsed .rr{grid-template-columns:24px 62px minmax(0,1fr) 72px 64px 64px 66px 82px;gap:8px;min-width:0;width:100%;border-right:0;border-bottom:1px solid var(--line);padding:11px 14px;justify-items:stretch}
+html.tabmode .rr .rk,html.tabmode .rr .mid{display:grid}
+html.tabmode .rr .mid{gap:1px}
+html.tabmode .rr .mid .nm{font-size:12.5px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html.tabmode .rr .px,html.tabmode .rr .ch,html.tabmode .rr .pc,html.tabmode .rr .vo,html.tabmode .rr .lt{text-align:right;font-size:13.5px}
+html.tabmode .rr .ch{font-weight:700}
+html.tabmode .rr .vo,html.tabmode .rr .lt{color:var(--muted);font-weight:600;white-space:nowrap}
+html.tabmode .rr.sel::before{left:0;top:0;bottom:0;right:auto;width:4px;height:auto}
+html.tabmode .rr.rr-cols{display:grid;position:sticky;top:calc(env(safe-area-inset-top,0px) + 61px);z-index:2;background:var(--surface);border-bottom:1px solid var(--fg);padding-top:8px;padding-bottom:8px}
+html.tabmode .rr.rr-cols span{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+html.tabmode .rr.rr-cols span:nth-child(n+4){text-align:right}
+html.tabmode .rail-head .small{display:block;text-align:right}
+html.tabmode .t20-full{display:inline-grid;width:36px;height:36px}
+html.tabmode .rail-foot{display:none}
+/* phones: the most useful columns; the expand button shows the full table */
+@media (max-width:640px){
+  html.tabmode .mtabs a{font-size:13.5px;padding:9px 4px}
+  html.tabmode .rr,html.tabmode .collapsed .rr{grid-template-columns:20px minmax(54px,1fr) 38px 66px 60px 58px;gap:5px;padding:11px 8px}
+  html.tabmode .rr .vo,html.tabmode .rr .lt,html.tabmode .rr .mid .nm{display:none}
+  html.tabmode .rr .px{font-size:13px}
+  html.tabmode .rr.rr-cols span:nth-child(3),html.tabmode .rr.rr-cols span:nth-child(7),html.tabmode .rr.rr-cols span:nth-child(8){display:none}
+  html.tabmode .rr.rr-cols span:nth-child(3){display:block;visibility:hidden}
+  html.tabmode .rail-head .small{display:none}
+}
+/* phones held sideways: the sections become a slim menu down the left edge */
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+  html.tabmode body{padding-left:calc(96px + env(safe-area-inset-left,0px))}
+  html.tabmode .mtabs{position:fixed;left:0;top:0;bottom:0;width:96px;flex-direction:column;justify-content:center;margin:0;
+    padding:calc(8px + env(safe-area-inset-top,0px)) 8px calc(8px + env(safe-area-inset-bottom,0px)) calc(8px + env(safe-area-inset-left,0px));border-bottom:0;border-right:1px solid var(--line)}
+  html.tabmode .mtabs a{flex:none;border-radius:12px;font-size:13px}
+  html.tabmode .rr.rr-cols{top:0}
+  html.tabmode[data-view=stock] .panel:target .grid{--min:300px}
+}
+/* the full Top 20 table on a touch screen scrolls sideways inside its box */
+html.tabmode .t20-box{width:calc(100vw - 16px);margin:8px auto;padding:14px}
+html.tabmode .t20-modal .tbl-box{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.m-detail{display:none}
+html.tabmode[data-view=stock] .m-detail{display:grid;gap:14px}
+html.tabmode .mkt-back{display:none}
+html.tabmode .rr .mid .mv{justify-self:start}
+/* phones: a compact header so the sections start on the first screen */
+@media (max-width:640px){
+  html.tabmode .mast-top{padding-top:10px;padding-bottom:8px;gap:6px}
+  html.tabmode .mast-top img{height:32px}
+  html.tabmode .tagline{font-size:9.5px;letter-spacing:.12em}
+  html.tabmode .mast-tools{gap:6px}
+  html.tabmode .clk{padding:4px 10px}
+  html.tabmode .clk-time{font-size:14px}
+  html.tabmode .tz-sw{padding:4px 8px}
+  html.tabmode .tz-k{display:none}
+  html.tabmode .tz-b{min-height:32px;font-size:12px;padding:3px 10px}
+  html.tabmode .mast-top{position:relative}
+  html.tabmode .theme-btn{position:absolute;top:10px;right:max(var(--gutter),env(safe-area-inset-right,0px));padding:5px 10px;font-size:11.5px}
+  html.tabmode .updates{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  html.tabmode .updates .chip{flex:none}
+  html.tabmode .dateline{font-size:10.5px;gap:4px 10px}
+  html.tabmode .mkt-why{display:none}
+  html.tabmode .title{font-size:30px}
+  html.tabmode .viewing{font-size:13.5px;margin-top:2px}
+  html.tabmode .econ .ev-sub{display:none}
+  html.tabmode .econ{padding:8px 12px}
+  html.tabmode .ev-main .ev-time,html.tabmode .ev-main .ev-name{font-size:14px}
+  html.tabmode .pending{font-size:12.5px;padding:8px 12px}
+  html.tabmode .rr[href="#market-news"] .mid{visibility:hidden}
+  html.tabmode .m-detail .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* ---------------------------------------------------------------- improvement 9, round 2 (Youssef's
+   approved designs of 6 Nov): compact header with a menu for the second clock, the time switch and
+   the theme; segmented section tabs; full-width Grab button on phones. Desktop is unchanged. */
+.mast-menu{display:none}
+.mast-brand{display:contents}
+html.tabmode .mast-top{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;text-align:left;gap:8px 12px;padding-top:12px;padding-bottom:10px}
+html.tabmode .mast-brand{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-right:auto}
+html.tabmode .mast-top img{height:34px}
+html.tabmode .tagline{font-size:9.5px;letter-spacing:.1em}
+html.tabmode .mast-tools{position:static;order:2;display:flex;align-items:center;gap:8px}
+html.tabmode .mast-menu{display:inline-grid;place-items:center;order:3;width:44px;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg)}
+html.tabmode .theme-btn{position:static;transform:none}
+/* the time switch and the theme button live in the menu; tablets keep both clocks in view */
+html.tabmode:not(.menu-open) .tz-sw,html.tabmode:not(.menu-open) .theme-btn{display:none}
+html.tabmode.menu-open .mast-menu{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+/* segmented tabs */
+html.tabmode .mseg{display:flex;flex:1;gap:2px;padding:4px;border-radius:13px;background:var(--chip);border:1px solid var(--line)}
+html.tabmode .mtabs a{border-radius:10px;color:var(--muted);font-weight:700}
+html.tabmode .mtabs a.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px color-mix(in srgb,var(--fg) 14%,transparent)}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+  html.tabmode .mseg{flex:none;flex-direction:column;background:none;border:0;padding:0;gap:6px}
+  html.tabmode .mtabs a.on{background:var(--fg);color:var(--bg);box-shadow:none}
+}
+@media (max-width:640px){
+  html.tabmode .tagline{display:none}
+  html.tabmode .mast-top img{height:30px}
+  /* phones: New York clock only until the menu is opened */
+  html.tabmode .clocks{flex-wrap:nowrap}
+  html.tabmode .theme-btn{min-height:40px}
+  html.tabmode .tb-right{align-items:stretch;width:100%}
+  html.tabmode .grab{justify-content:stretch}
+  html.tabmode .grab-btn{flex:1;min-height:46px;border-radius:12px;font-size:14px}
+  html.tabmode .lock-btn{min-height:46px}
+  html.tabmode .grab-note{text-align:left}
+}
+html.tabmode .tb-right{align-items:flex-start}
+html.tabmode .grab{justify-content:flex-start}
+html.tabmode .grab-note{text-align:left}
+@media (min-width:641px){
+  html.tabmode .rr .mid{display:flex;align-items:center;gap:8px;min-width:0}
+  html.tabmode .rr .mid .mv{flex:none}
+  html.tabmode .rr,html.tabmode .collapsed .rr{padding-top:9px;padding-bottom:9px}
+}
+/* tablets held sideways (1024-1180 px): a wider Top 20 with price and % change beside the gap */
+@media (min-width:1024px) and (max-width:1180px) and (orientation:landscape){
+  html:not(.tabmode) .split,html:not(.tabmode) .split.collapsed{grid-template-columns:440px minmax(0,1fr)}
+  html:not(.tabmode) .rr{grid-template-columns:22px 64px minmax(0,1fr) 74px 66px 66px;gap:6px}
+  html:not(.tabmode) .rr .px,html:not(.tabmode) .rr .ch{display:block;text-align:right;font-size:13px}
+  html:not(.tabmode) .rr .ch{font-weight:700}
+  html:not(.tabmode) .rr .pc{text-align:right}
+  html:not(.tabmode) .rr.rr-cols{display:grid;padding-top:6px;padding-bottom:6px;border-bottom:1px solid var(--fg)}
+  html:not(.tabmode) .rr.rr-cols span{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  html:not(.tabmode) .rr.rr-cols span:nth-child(n+4){text-align:right}
+  html:not(.tabmode) .rr.rr-cols span:nth-child(3){visibility:hidden}
+  html:not(.tabmode) .rr.rr-cols span:nth-child(n+7){display:none}
+}
+/* ---------------------------------------------------------------- improvement 9, round 3 (Youssef,
+   6 Nov 14:15Z): no dateline under the header on phones and tablets; a small market status beside
+   the logo and an "i" button that shows the date, data time and ranking basis; both clocks always in
+   view; "StockNews Intelligence" right under the coloured line; today's updates in a 2 x 2 block to
+   the right of the title. */
+.mast-info,.mast-status{display:none}
+html.tabmode .mast-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+html.tabmode .mast-status .dot{width:6px;height:6px}
+html.tabmode .mast-info{display:inline-grid;place-items:center;order:2;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:700 15px Georgia,"Times New Roman",serif;font-style:italic}
+html.tabmode.info-open .mast-info{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+html.tabmode .mast-tools{order:1}
+html.tabmode .mast-menu{order:3}
+html.tabmode .dateline{display:none}
+html.tabmode.info-open .dateline{display:flex;flex-direction:column;align-items:flex-start;gap:6px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:10px 12px;letter-spacing:.04em;font-size:11px}
+html.tabmode .mast-body{padding-top:10px;gap:10px}
+/* both clocks, stacked in one small box */
+html.tabmode .clocks .clk+.clk{display:grid}
+html.tabmode .clocks{flex-direction:column;flex-wrap:nowrap;width:auto}
+html.tabmode .clk{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:3px 10px;flex:none}
+html.tabmode .clk+.clk{border-left:0;border-top:1px solid var(--line)}
+html.tabmode .clk-city,html.tabmode .clk-sel{font-size:9.5px}
+html.tabmode .clk-sel{max-width:92px}
+html.tabmode .clk-time{font-size:13px}
+html.tabmode .clk-zone{font-size:9.5px}
+/* title on the left, the four update times on the right, then the events strip and the Grab row */
+html.tabmode .titlebar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title upd" "econ econ" "grab grab";gap:10px 12px;align-items:center}
+html.tabmode .titlebar>div:first-child{grid-area:title;min-width:0}
+html.tabmode .titlebar>.econ{grid-area:econ}
+html.tabmode .tb-right{display:contents}
+html.tabmode .updates{grid-area:upd;display:grid;grid-template-columns:repeat(2,auto);gap:6px;justify-content:end;align-self:center;overflow:visible}
+html.tabmode .updates .label{display:none}
+html.tabmode .updates .chip{text-align:center;padding:4px 9px;font-size:11.5px}
+html.tabmode .grab{grid-area:grab;width:100%}
+html.tabmode .viewing{font-size:13px;margin-top:2px}
+@media (max-width:640px){
+  html.tabmode .mast-top{flex-wrap:nowrap;gap:8px}
+  html.tabmode .mast-top img{height:26px}
+  html.tabmode .title{font-size:27px}
+  html.tabmode.menu-open .mast-top{flex-wrap:wrap}
+}
+/* round 4 (Youssef, 6 Nov 14:26Z): the two clocks line up in fixed columns whatever city is chosen
+   (city | time | zone), and the "i" panel is centred and evenly set. */
+html.tabmode .clocks{display:grid;grid-template-columns:minmax(0,auto) auto 30px;column-gap:8px;row-gap:0;align-items:baseline;padding:2px 10px}
+html.tabmode .clocks .clk,html.tabmode:not(.sn-none) .clocks .clk+.clk,html.tabmode .clocks .clk-row{display:contents}
+html.tabmode .clocks .clk-city,html.tabmode .clocks .clk-sel{grid-column:1;padding:4px 0;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html.tabmode .clocks .clk-time{grid-column:2;text-align:right;font-variant-numeric:tabular-nums}
+html.tabmode .clocks .clk-zone{grid-column:3;text-align:left}
+html.tabmode .clocks .clk+.clk .clk-sel,html.tabmode .clocks .clk+.clk .clk-time,html.tabmode .clocks .clk+.clk .clk-zone{border-top:1px solid var(--line);padding-top:4px}
+html.tabmode .clocks .clk+.clk .clk-zone,html.tabmode .clocks .clk+.clk .clk-time{align-self:stretch;display:flex;align-items:flex-end}
+html.tabmode .clocks .clk+.clk .clk-time{justify-content:flex-end}
+html.tabmode .clocks .tz-sw{grid-column:1/-1}
+html.tabmode.info-open .dateline{align-items:center;text-align:center;gap:0;padding:4px 14px;font-size:10.5px;letter-spacing:.06em;line-height:1.45}
+html.tabmode.info-open .dateline>*{width:100%;padding:7px 0;text-wrap:balance;justify-content:center}
+html.tabmode.info-open .dateline>*+*{border-top:1px solid var(--line)}
+html.tabmode.info-open .dateline .mkt-status{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px}
+html.tabmode.info-open .dateline .mkt-why:empty,html.tabmode.info-open .dateline .mkt-why[hidden],html.tabmode.info-open .dateline script{display:none}
+@media (max-width:640px){
+  /* phones: city | time only (the zone names are on the time switch in the menu), so whole city names fit */
+  html.tabmode .clocks{grid-template-columns:auto auto}
+  html.tabmode .clocks .clk-zone{display:none}
+  html.tabmode .clocks .clk-city,html.tabmode .clocks .clk-sel{max-width:104px}
+  html.tabmode .mast-info{width:34px;height:34px}
+  html.tabmode .mast-menu{width:40px;height:40px}
+}
+html.tabmode.info-open .dateline>*{white-space:normal;max-width:100%}
+@media (max-width:640px){html.tabmode .clocks .clk-sel{max-width:86px}}
+html.tabmode.info-open .dateline{flex-wrap:nowrap}
+html.tabmode.info-open .dateline .mkt-why{flex-basis:auto;font-size:10.5px;color:var(--muted)}
+@media (max-width:640px){html.tabmode .clocks .clk+.clk .clk-zone{display:none}}
+/* Round 5: the city picker's text starts exactly where "New York" starts. The browser's own select box adds a hidden inner indent, so it is replaced by a plain box with a drawn arrow in the text colour (works in both themes). */
+.clk-sel{-webkit-appearance:none;-moz-appearance:none;appearance:none;padding:0 13px 0 0;text-indent:0;border-radius:0;background-color:transparent;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 4px) 55%,100% 55%;background-size:4px 4px,4px 4px;background-repeat:no-repeat;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.clk-sel::-ms-expand{display:none}
+html.tabmode .clocks .clk-city,html.tabmode .clocks .clk-sel{justify-self:start;text-align:left}
+html.tabmode .clocks .clk+.clk .clk-sel{padding-right:13px}
+
+/* Round 7 (Youssef 6 Nov 15:48Z): the burger opens one row under the header: a light / dark icon and the time switch side by side.
+   The clocks stay exactly where they are, open or closed. */
+.th-ic{display:none}
+.mast-opts{display:none}
+html.tabmode.menu-open .mast-opts{display:flex;order:9;flex-basis:100%;align-items:center;justify-content:flex-end;gap:8px}
+html.tabmode .mast-opts .theme-btn{display:inline-grid;place-items:center;width:40px;height:40px;min-height:40px;padding:0;border-radius:10px;position:static;transform:none}
+html.tabmode .mast-opts .th-ic{display:block}
+html.tabmode .mast-opts .th-lab{display:none}
+html.tabmode .mast-opts .tz-sw{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:3px;gap:3px;min-height:40px}
+html.tabmode .mast-opts .tz-b{min-height:32px}
+html.tabmode .mast-opts .theme-btn{order:1}
+html.tabmode .mast-opts .tz-sw{order:2;flex:0 0 auto;flex-basis:auto;justify-content:flex-start;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+/* Round 8 (Youssef 6 Nov 15:59Z): the top row (logo, clocks, "i", menu) is a fixed grid, so nothing moves or shrinks
+   when the menu opens; the theme icon and time switch appear on their own row underneath. */
+html.tabmode .mast-top,html.tabmode.menu-open .mast-top{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto auto;align-items:center;column-gap:10px;row-gap:8px}
+html.tabmode .mast-brand{grid-column:1;grid-row:1;margin-right:0;min-width:0}
+html.tabmode .mast-tools{grid-column:2;grid-row:1;justify-self:end;min-width:0}
+html.tabmode .mast-info{grid-column:3;grid-row:1;flex-shrink:0}
+html.tabmode .mast-menu{grid-column:4;grid-row:1;flex-shrink:0}
+html.tabmode.menu-open .mast-opts{grid-column:1/-1;grid-row:2}
+@media (max-width:400px){
+  html.tabmode .mast-top,html.tabmode.menu-open .mast-top{column-gap:6px}
+  html.tabmode .mast-info{width:32px;height:32px}
+  html.tabmode .mast-menu{width:38px;height:38px}
+  html.tabmode .mast-top img{height:24px}
+  html.tabmode .clocks{padding:2px 8px;column-gap:6px}
+  html.tabmode .clocks .clk-city,html.tabmode .clocks .clk-sel{max-width:78px}
+}
+/* Round 9 (Youssef 6 Nov 16:02Z): the theme button shows a sun in day (light) mode and a moon in night (dark) mode */
+html.tabmode .mast-opts .th-moon{display:none}
+@media (prefers-color-scheme:dark){html.tabmode:not([data-theme="light"]) .mast-opts .th-sun{display:none}html.tabmode:not([data-theme="light"]) .mast-opts .th-moon{display:block}}
+html.tabmode[data-theme="dark"] .mast-opts .th-sun{display:none}
+html.tabmode[data-theme="dark"] .mast-opts .th-moon{display:block}
+html.tabmode[data-theme="light"] .mast-opts .th-sun{display:block}
+/* Round 10 (Youssef 6 Nov 16:09Z): a stock's full page uses the same phone and tablet layout (no empty side-menu gap sideways) */
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view=page] body{padding-left:env(safe-area-inset-left,0px)}}
+html.tabmode .back-page{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px;text-decoration:none}
+/* Round 11 (Youssef 6 Nov 16:18Z): on upright phones the logo and the market status never sit under the clocks.
+   The logo column keeps its own width; the clocks give way instead (smaller type, city name shortened with "…"). */
+@media (max-width:640px){
+  html.tabmode .mast-top,html.tabmode.menu-open .mast-top{grid-template-columns:auto minmax(0,1fr) auto auto;column-gap:8px}
+  html.tabmode .mast-brand{min-width:max-content}
+  html.tabmode .mast-top img{height:22px;width:auto}
+  html.tabmode .mast-status{font-size:8.5px;letter-spacing:.04em;gap:4px;white-space:nowrap}
+  html.tabmode .mast-tools{justify-self:end;max-width:100%;display:flex;justify-content:flex-end}
+  html.tabmode .clocks{min-width:0;max-width:100%;padding:2px 7px;column-gap:6px;grid-template-columns:minmax(0,1fr) auto}
+  html.tabmode .clocks .clk-time{font-size:13px}
+  html.tabmode .clocks .clk-city,html.tabmode .clocks .clk-sel{font-size:8.5px;max-width:100%;min-width:0}
+  html.tabmode .mast-info{width:32px;height:32px;font-size:14px}
+  html.tabmode .mast-menu{width:38px;height:38px}
+}
+/* Round 12 (Youssef 6 Nov 16:24Z): the full Top 20 close button is on the title's line, clearly outlined, and always pressable */
+.t20-modal .sec h2{order:1}
+.t20-modal .sec .t20-close{order:2;position:static;margin-left:auto;align-self:center;flex:none;width:40px;height:40px;display:inline-grid;place-items:center;
+  border:2px solid var(--fg);border-radius:999px;background:var(--surface);color:var(--fg);font-size:17px;font-weight:700;line-height:1;cursor:pointer;z-index:1}
+.t20-modal .sec .t20-close:hover{background:var(--fg);color:var(--surface)}
+.t20-modal .sec .meta{order:3;flex-basis:100%}
+.t20-box:focus{outline:none}
+.t20-modal .sec{align-items:center}.t20-modal .sec .t20-close{width:36px;height:36px;font-size:16px}
+.t20-modal .sec{align-items:flex-start}.t20-modal .sec .t20-close{width:30px;height:30px;font-size:13px;border-width:1.5px;align-self:flex-start}
+.t20-modal .sec{align-items:center}.t20-modal .sec .t20-close{align-self:center;transform:translateY(-3px)}@media (min-width:1024px){.t20-modal .sec .t20-close{width:34px;height:34px;font-size:14px}}
+/* Round 14 (Youssef 6 Nov 16:49Z): phones and tablets upright: a sideways-scrolling row of the Top 20 stocks, in rank order,
+   under the section tabs; it stays in view with them while the page scrolls. */
+.mstrip{display:none}
+html.tabmode .mtabs{flex-wrap:wrap;row-gap:8px}
+html.tabmode .mstrip{display:flex;flex-basis:100%;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
+  scrollbar-width:none;padding:0 0 2px;margin:0;mask-image:linear-gradient(90deg,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent)}
+html.tabmode .mstrip::-webkit-scrollbar{display:none}
+html.tabmode .mstrip a{flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:4px 11px 4px 9px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;font-size:13px;white-space:nowrap}
+html.tabmode .mstrip a b{font-weight:800;letter-spacing:.01em}
+html.tabmode .mstrip .ms-n{font-size:11px;font-weight:700;color:var(--muted);min-width:12px;text-align:right}
+html.tabmode .mstrip .swatch{width:8px;height:8px;border-radius:2px;background:var(--brand);display:inline-block}
+html.tabmode .mstrip .ms-c{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+html.tabmode .mstrip a.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+html.tabmode .mstrip a.on .ms-n{color:inherit;opacity:.7}
+html.tabmode .mstrip a:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:1px}
+/* phones held sideways keep their slim side menu, without the row */
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode .mstrip{display:none}}
+/* Round 15 (Youssef 6 Nov 17:12Z): on a stock (its view and its full page), phones and tablets upright keep the header
+   (logo, status, clocks, "i", menu and its row), the section tabs and the Top 20 row pinned at the top while scrolling. */
+.mast-fix{display:contents}
+@media (orientation:portrait),(min-height:541px){
+  html.tabmode[data-view] .mast-fix{display:block;position:fixed;top:0;left:0;right:0;z-index:20;
+    background:var(--surface);padding-top:env(safe-area-inset-top,0px)}
+  html.tabmode[data-view] .mast{padding-top:var(--mast-h,0px)}
+  html.tabmode[data-view] .mtabs{top:var(--mast-h,0px)}
+}
+html.tabmode .mtabs-page{display:flex}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view=page] body{padding-left:calc(96px + env(safe-area-inset-left,0px))}}
+html.tabmode .mtabs-page,html.tabmode .mtabs-page .mstrip{min-width:0;max-width:calc(100% + 2 * var(--gutter))}
+/* Round 17 (Youssef 6 Nov 17:26Z): the stock's full-page link is a small button beside its "<TICKER> News" heading */
+.srcbox .sec .full-link{order:2;margin-left:auto;align-self:center;display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:999px;
+  background:var(--orange);color:#1A1205;font-size:12.5px;font-weight:700;text-decoration:none;white-space:nowrap}
+.srcbox .sec .full-link:hover{filter:brightness(1.06)}
+.srcbox .sec .full-link:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+.srcbox .sec:has(.full-link) h2{order:1}
+.srcbox .sec:has(.full-link) .srcsel{order:3;flex-basis:100%}
+.srcbox .sec:has(.full-link) .meta{order:4}
+html.tabmode .focus-body .row-wrap:has(> .mkt-back:only-child){display:none}
+/* Round 20 (Youssef 6 Nov 17:42Z): phones held sideways get the same stock fixes: the Top 20 row (pinned at the top of the page,
+   beside the side menu), the pinned header on a stock, and the News-heading landings. */
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+  html.tabmode .mstrip.ms-side{display:flex;position:sticky;top:0;z-index:7;margin:0 calc(-1 * var(--gutter));padding:8px var(--gutter);
+    background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);mask-image:none;-webkit-mask-image:none}
+  html.tabmode[data-view] .mast-fix{display:block;position:fixed;top:0;right:0;left:calc(96px + env(safe-area-inset-left,0px));z-index:20;
+    background:var(--surface);padding-top:env(safe-area-inset-top,0px)}
+  html.tabmode[data-view] .mast{padding-top:var(--mast-h,0px)}
+  html.tabmode[data-view] .mstrip.ms-side{top:var(--mast-h,0px)}
+}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view] .mast-fix .tagline{display:none}html.tabmode[data-view] .mast-fix .mast-top{padding-top:8px;padding-bottom:8px}}
+/* round 21: tablet upright, Markets fills the gaps: Breadth beside QQQ, then Sectors and Rule-based side by side */
+@media (min-width:700px) and (max-width:1180px) and (orientation:portrait){
+  .conds{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .conds .grid.tiles,.conds .grid.sumcards{display:contents}
+  .conds .sumcards>.card{grid-column:span 2}
+}
+/* round 22: no "Overall market and Top 20" line and no Grab hours note; empty lines take no space */
+.viewing:empty,.grab-note:empty{display:none}
+/* round 23/24: a small up arrow centred between the "<TICKER> News" title and Full page / Exit full screen */
+.srcbox .sec:has(.up-btn) h2{order:1;flex:0 1 auto;min-width:0}
+.srcbox .sec:has(.up-btn) .up-btn{order:2;margin:0 auto;align-self:center}
+.srcbox .sec:has(.up-btn) .full-link{order:3;margin-left:0}
+.srcbox .sec:has(.up-btn) .srcsel{order:4;flex-basis:100%}
+.srcbox .sec:has(.up-btn) .meta{order:5}
+.up-btn{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;padding:0;border-radius:999px;border:1.5px solid var(--line);
+  background:var(--surface);color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s}
+.up-btn svg{width:13px;height:13px}
+.up-btn:hover{border-color:var(--orange);color:var(--orange)}
+.up-btn:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+/* round 25: phones and tablets show the news source filters and the Latest News hour tabs (a broad [data-v]
+   rule hid them); on phones the source filters stay on one line and scroll sideways like the hour tabs */
+@media (max-width:640px){html.tabmode .srcsel{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  html.tabmode .srcsel::-webkit-scrollbar{display:none}html.tabmode .srcsel .chip{flex:none;max-width:none}}
+/* round 27: a down arrow beside "Back to Top 20" glides to the stock's News heading */
+.back-row{display:inline-flex;align-items:center;gap:10px}
+.panel>.back-row{display:none}
+html.tabmode[data-view=stock] .panel>.back-row{display:flex;justify-self:start}
+.down-btn{width:32px;height:32px}.down-btn svg{width:15px;height:15px}
+/* round 28 (6 Nov 18:54Z): Grab label and count; Lock with a padlock */
+.grab-btn .gb-c::before{content:" — "}
+.lock-btn{display:inline-flex;align-items:center;gap:6px}.lock-ic{flex:none}
+/* phones and tablets upright, and phones sideways (Youssef 6 Nov 22:05Z): the events strip, Grab and Lock share one row under the title */
+@media (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+  html.tabmode .titlebar{grid-template-areas:"title upd" "econ grab"}
+  html.tabmode .titlebar>.econ{min-width:0;width:auto;max-width:none;margin:0;flex-direction:row;justify-content:center;padding:6px 10px;min-height:46px;border-radius:12px}
+  html.tabmode .econ .ev-row{flex-wrap:nowrap;justify-content:center;gap:8px;min-width:0;width:100%}
+  html.tabmode .econ .ev-main{flex-wrap:nowrap;min-width:0}
+  html.tabmode .econ .ev-main .ev{gap:8px;min-width:0}
+  html.tabmode .econ .ev-k{font-size:10px;padding:2px 7px;letter-spacing:.08em}
+  html.tabmode .econ .ev-main .ev-time{font-size:13px;padding-left:0;border-left:0;flex:none}
+  html.tabmode .econ .ev-main .ev-name{font-size:13px;padding-left:8px;max-width:none;min-width:0}
+  html.tabmode .econ .ev-i{width:22px;height:22px;font-size:12px}
+  html.tabmode .econ .ev-toggle,html.tabmode .econ .ev-others,html.tabmode .econ>.ev-src{display:none}
+  html.tabmode .econ-empty{flex-wrap:nowrap;font-size:12px}
+  html.tabmode .econ-empty .ev-none{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  html.tabmode .grab{width:auto;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+  html.tabmode .grab-btn{flex:none;min-height:46px;padding:5px 14px;border-radius:12px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+  html.tabmode .grab-btn .gb-l{font-size:13px;font-weight:800}
+  html.tabmode .grab-btn .gb-c{font-size:10.5px;font-weight:600;opacity:.75}
+  html.tabmode .grab-btn .gb-c::before{content:none}
+  html.tabmode .lock-btn{min-height:46px;width:46px;padding:0;justify-content:center;border-radius:12px}
+  html.tabmode .lock-btn .lock-lab{display:none}
+  html.tabmode .grab-timer:empty{display:none}
+  html.tabmode .grab-timer,html.tabmode .grab-note{flex-basis:100%;text-align:right;contain:inline-size}   /* the notes never widen the row */
+  html.tabmode .econ .ev-sub{display:none}   /* one line; the figures and state stay in the i card and the dot */
+}
+@media (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode .titlebar>.econ,html.tabmode .grab{align-self:start}}
+/* phones upright: shorter Grab words, and the event as time over name so the name has room */
+@media (orientation:portrait) and (max-width:640px){
+  html.tabmode .econ .ev-k{display:none}
+  html.tabmode .titlebar>.econ{padding:4px 8px 4px 12px;justify-content:flex-start;height:46px;line-height:1.2}
+  html.tabmode .econ .ev-row,html.tabmode .econ .ev-main{width:100%}
+  html.tabmode .econ .ev-main .ev{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"t d i" "n n i";column-gap:6px;row-gap:1px;width:100%;align-items:center}
+  html.tabmode .econ .ev-main .ev-time{grid-area:t;font-size:11px;font-weight:700;color:var(--muted)}
+  html.tabmode .econ .ev-main .ev-name{grid-area:n;font-size:13px;padding-left:0;border-left:0;overflow:hidden;text-overflow:ellipsis}
+  html.tabmode .econ .ev-main .ev-dot{grid-area:d;justify-self:start;margin-left:0;width:7px;height:7px}
+  html.tabmode .econ .ev-main .ev-i{grid-area:i}
+  html.tabmode .grab-btn{padding:5px 12px}
+  html.tabmode .grab-btn .gb-l,html.tabmode .grab-btn .gb-c{font-size:0}
+  html.tabmode .grab-btn .gb-l::after{content:attr(data-s);font-size:12.5px}
+  html.tabmode .grab-btn .gb-c::after{content:attr(data-s);font-size:10.5px}
+  html.tabmode .lock-btn{width:44px}
+}
+/* improvements 7 and 8 (Youssef 6 Nov 20:25Z): data time under the Relative Strength heading, and
+   the waiting state of a delayed index just after the open */
+.rs-asof{margin:-4px 0 10px;color:var(--muted)}
+.tile .waitp{color:var(--muted)}
+/* Grab button in the Elyou Group gradient (Youssef 6 Nov 21:06Z): the same gradient, dark text and
+   soft glow as Unlock on the password page, so it stands out in light and dark. While it waits
+   (10-minute gap, limit reached, or a run in progress) it keeps the brand colours, softened. */
+.grab-btn{position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#FFB000 0%,#FF8A2A 40%,#FF5A5F 72%,#FF2F8A 100%);color:#1A0E05;
+  box-shadow:0 6px 18px rgba(255,95,95,.30),inset 0 1px 0 rgba(255,255,255,.35);
+  transition:filter .2s,transform .2s,box-shadow .2s}
+.grab-btn:hover:not([disabled]){filter:brightness(1.06) saturate(1.05);box-shadow:0 8px 24px rgba(255,95,95,.40),inset 0 1px 0 rgba(255,255,255,.35)}
+.grab-btn:active:not([disabled]){transform:translateY(1px)}
+.grab-btn:focus-visible{outline:3px solid rgba(255,128,64,.55);outline-offset:2px}
+.grab-btn[disabled]{opacity:1;filter:saturate(.45) brightness(1.02);box-shadow:none;cursor:not-allowed}
+:root[data-theme="dark"] .grab-btn[disabled]{filter:saturate(.45) brightness(.8)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .grab-btn[disabled]{filter:saturate(.45) brightness(.8)}}
+html.tabmode .grab-btn .gb-c{opacity:.85}
+/* market closed, weekend, holiday or before the first grab time (Youssef 6 Nov 23:51Z): fully greyed out, no brand colours */
+.grab-btn.off,.grab-btn.off[disabled]{background:var(--chip);color:var(--muted);border:1px solid var(--line);filter:none;box-shadow:none;cursor:not-allowed}
+/* Grab notice ("Last grab …", accepted / limit messages) lives in the info line, in its format
+   (Youssef 6 Nov 21:14Z): on phones and tablets inside the "i" panel, centred like its other rows */
+.dateline .grab-note,html.tabmode .dateline .grab-note{flex-basis:auto;text-align:inherit;font-size:inherit;color:inherit;min-height:0;contain:none}
+html.tabmode.info-open .dateline .grab-note{justify-content:center}
+/* Red "1" on the "i" button while a Grab message is waiting in the panel (Youssef 6 Nov 21:17Z) */
+.mast-info{position:relative}
+.info-badge{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;
+background:#E5242B;color:#fff;border:2px solid var(--bg);font:700 11px/14px system-ui,-apple-system,"Segoe UI",sans-serif;font-style:normal;text-align:center;
+animation:ib-pop .35s ease-out}
+@keyframes ib-pop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.info-badge{animation:none}}
+/* The Elyou Group logo is a link home (Youssef 6 Nov 22:05Z): no underline or extra box */
+.home-link{display:inline-block;line-height:0;border-radius:6px;color:inherit;text-decoration:none}
+.home-link:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+/* phones sideways (Youssef 6 Nov 22:05Z): Markets fills the gaps like a tablet upright, Breadth beside QQQ, then Sectors and Rule-based side by side */
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+  html.tabmode .conds{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  html.tabmode .conds .grid.tiles,html.tabmode .conds .grid.sumcards{display:contents}
+  html.tabmode .conds .sumcards>.card{grid-column:span 2}
+}
+/* Tablets held sideways (iPad mini 1133 x 744; Youssef 6 Nov 22:21Z): the phone-sideways layout (side menu, "i" panel,
+   burger, pinned header and Top 20 row, filters, full-screen buttons), sized up and squared off for the bigger screen:
+   the updates in one row level with the title, and the events strip, Grab and Lock one height on the next row */
+@media (orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+  html.tabmode .titlebar{gap:14px 14px}
+  html.tabmode .updates{grid-template-columns:repeat(4,auto);gap:8px;grid-row:1;grid-column:1 / -1;justify-self:end}   /* the row of 4 does not narrow the events strip below */
+  html.tabmode .titlebar>div:first-child{grid-row:1;grid-column:1 / -1}
+  html.tabmode .updates .chip{padding:7px 14px;font-size:13.5px}
+  html.tabmode .titlebar>.econ{min-height:56px;padding:8px 16px}
+  html.tabmode .econ .ev-k{font-size:11.5px;padding:3px 9px}
+  html.tabmode .econ .ev-main .ev-time,html.tabmode .econ .ev-main .ev-name{font-size:15.5px}
+  html.tabmode .econ .ev-i{width:26px;height:26px;font-size:13px}
+  html.tabmode .grab{gap:10px}
+  html.tabmode .grab-btn{min-height:56px;padding:6px 22px;border-radius:14px}
+  html.tabmode .grab-btn .gb-l{font-size:15px}
+  html.tabmode .grab-btn .gb-c{font-size:12px}
+  html.tabmode .lock-btn{min-height:56px;width:56px;border-radius:14px}
+  html.tabmode .lock-btn .lock-ic{width:18px;height:18px}
+  html.tabmode .mast-info,html.tabmode .mast-menu{width:42px;height:42px}
+  html.tabmode .mtabs a{font-size:15px}
+  html.tabmode .mstrip a{font-size:14px}
+}
+/* Desktop full stock page (Youssef 6 Nov 22:49Z): all Top 20 stocks in one row between Technicals and the news,
+   pinned at the top while the news scrolls; drag or scroll it sideways, click a stock to open its news */
+html.tabmode .dstrip{display:none!important}
+html:not(.tabmode) .dstrip{display:flex;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;position:sticky;top:0;z-index:8;
+  margin:0 calc(-1 * var(--gutter));padding:10px var(--gutter);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);cursor:grab;user-select:none;-webkit-user-select:none}
+html:not(.tabmode) .dstrip::-webkit-scrollbar{display:none}
+html:not(.tabmode) .dstrip.drag{cursor:grabbing}
+html:not(.tabmode) .dstrip a{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:4px 13px 4px 10px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;font-size:13.5px;white-space:nowrap;transition:border-color .15s,background .15s}
+html:not(.tabmode) .dstrip a:hover{border-color:color-mix(in srgb,var(--brand) 60%,var(--line))}
+html:not(.tabmode) .dstrip a b{font-weight:800;letter-spacing:.01em}
+html:not(.tabmode) .dstrip .ms-n{font-size:11px;font-weight:700;color:var(--muted);min-width:12px;text-align:right}
+html:not(.tabmode) .dstrip .swatch{width:8px;height:8px;border-radius:2px;background:var(--brand);display:inline-block}
+html:not(.tabmode) .dstrip .ms-c{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+html:not(.tabmode) .dstrip a.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+html:not(.tabmode) .dstrip a.on .ms-n{color:inherit;opacity:.7}
+html:not(.tabmode) .dstrip a:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:1px}
+/* the news always has room to reach the top under the pinned row, even for a stock with little news (VALE, 6 Nov) */
+html:not(.tabmode) .wrap:has(> .dstrip) > #news{min-height:calc(100vh - 80px)}
+/* desktop info strip (Youssef 6 Nov 23:07Z): no line above it, only the one below; slightly larger, evenly spaced */
+html:not(.tabmode) .dateline{border-top:0;padding:2px 0 11px;font-size:12.5px;row-gap:6px}
+
+/* AI logo on each AI block (Youssef 7 Nov): a quick light flash every few seconds, not a slow glow.
+   Only transform and opacity move, so it costs almost nothing; hidden blocks don't animate. */
+.ai-pick{position:relative;flex:0 0 24px;width:24px;height:24px;padding:0;border:0;border-radius:7px;cursor:pointer;overflow:hidden;
+background:var(--surface) center/cover no-repeat;box-shadow:0 0 0 1px var(--line);vertical-align:middle;-webkit-tap-highlight-color:transparent}
+.ai-pick-claude{background-image:url(ai-claude.png)}.ai-pick-gemini{background-image:url(ai-gemini.png)}
+.ai-pick::after{content:"";position:absolute;inset:-2px;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.9) 50%,transparent 68%);
+transform:translateX(-130%);animation:ai-flash 4.8s cubic-bezier(.3,.6,.3,1) infinite;pointer-events:none}
+.ai-pick::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 2px var(--ai-ink);opacity:0;animation:ai-ring 4.8s ease-out infinite;pointer-events:none}
+@keyframes ai-flash{0%{transform:translateX(-130%)}12%,100%{transform:translateX(130%)}}
+@keyframes ai-ring{0%{opacity:0}5%{opacity:.9}18%,100%{opacity:0}}
+.ai-pick:hover,.ai-pick:focus-visible{box-shadow:0 0 0 2px var(--ai-ink);outline:none}
+.ai-backup{opacity:.8}
+@media (prefers-reduced-motion:reduce){.ai-pick::after,.ai-pick::before{animation:none;display:none}}
+.ai-modal{border:0;padding:0;background:transparent;max-width:none;max-height:none;margin:auto;overflow:visible}
+.ai-modal::backdrop{background:rgba(2,8,23,.55);backdrop-filter:blur(2px)}
+.ai-modal-box{width:min(420px,calc(100vw - 32px));background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px;box-shadow:0 24px 70px rgba(2,8,23,.35)}
+.ai-modal-head{display:flex;align-items:center;justify-content:space-between;font-size:16px;padding:0 2px 4px}
+.ai-modal-x{border:0;background:transparent;color:var(--muted);font-size:24px;line-height:1;width:36px;height:36px;border-radius:10px;cursor:pointer}
+.ai-modal-x:hover{background:var(--line)}
+.ai-opt{display:flex;align-items:center;gap:12px;text-align:left;font:inherit;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;min-height:60px}
+.ai-opt img,.ai-opt svg{flex:0 0 40px;width:40px!important;height:40px!important;border-radius:10px;display:block}
+.ai-opt svg{padding:6px;box-sizing:border-box;color:var(--muted);box-shadow:0 0 0 1px var(--line)}
+.ai-opt>span{display:grid;gap:2px;font-size:14px}.ai-opt-txt{font-size:12.5px;color:var(--muted)}
+.ai-opt:hover{border-color:var(--ai-ink)}
+.ai-opt[aria-pressed="true"]{border-color:var(--fg);box-shadow:0 0 0 1px var(--fg);background:var(--bg)}
