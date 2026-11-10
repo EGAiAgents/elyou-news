@@ -135,6 +135,16 @@ a.card:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(2,8,23,.05),0 
 .foot{background:var(--surface);border-top:1px solid var(--line)}
 .foot .wrap{display:grid;gap:8px;padding-top:24px;padding-bottom:30px;font-size:12.5px;color:var(--muted)}
 .foot img{height:34px;width:auto}
+/* Youssef 10 Nov 03:11Z: back-to-top button (his circled up arrow), on the right of the footer, level with the logo block */
+.foot .wrap{grid-template-columns:minmax(0,1fr) auto;column-gap:16px}
+.foot .wrap > :not(.to-top){grid-column:1}
+.foot .to-top{grid-column:2;grid-row:1 / span 3;align-self:center;margin-right:-6px;display:grid;place-items:center;width:52px;height:52px;padding:0;border:0;border-radius:999px;
+  background:transparent;color:var(--fg);cursor:pointer;transition:color .15s,background .15s,transform .15s;-webkit-tap-highlight-color:transparent}
+.foot .to-top svg{width:40px;height:40px;display:block}
+@media (hover:hover){.foot .to-top:hover{color:var(--orange);transform:translateY(-2px)}}
+.foot .to-top:active{transform:translateY(-1px)}
+.foot .to-top:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+@media (max-width:640px){.foot .to-top{width:48px;height:48px}.foot .to-top svg{width:36px;height:36px}}
 .bp{position:fixed;right:10px;bottom:10px;z-index:9;background:var(--fg);color:var(--bg);font-size:11px;font-weight:700;border-radius:999px;padding:5px 10px;opacity:.85;pointer-events:none}
 /* breakpoints */
 @media (max-width:1180px){.split{grid-template-columns:290px minmax(0,1fr)}}
@@ -180,7 +190,7 @@ a.card:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(2,8,23,.05),0 
   h1.title{font-size:clamp(30px,2.6vw,46px)}
   .split{grid-template-columns:minmax(560px,34%) minmax(0,1fr);gap:28px}
   .rail .x{display:block}
-  .rr{grid-template-columns:24px 62px minmax(0,1fr) 70px 62px 62px 62px 80px;gap:8px;padding:9px 12px}
+  .rr{grid-template-columns:24px 62px minmax(0,1fr) 66px 62px 62px 66px 80px;gap:8px;padding:9px 12px}
   .rr .lt{white-space:nowrap}
   .rr .mid .mv{justify-self:start}
   .rr .px,.rr .ch,.rr .pc,.rr .vo,.rr .lt{text-align:right;font-size:13px}
@@ -263,7 +273,7 @@ html[data-tzmode=city] .updates .label::after{content:" · New York time"}   /* 
    the page keeps the single long layout above. Tablets in landscape and desktops keep the split view. */
 .mtabs,.back-t20{display:none}
 html.tabmode .mtabs{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:8;gap:4px;padding:8px var(--gutter);margin:0 calc(-1 * var(--gutter));
-  background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  background:var(--bg);border-bottom:1px solid var(--line)}
 html.tabmode .mtabs a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14px;padding:10px 6px;border-radius:999px;color:var(--muted);min-height:44px;display:grid;place-items:center}
 html.tabmode .mtabs a.on{background:var(--fg);color:var(--bg)}
 html.tabmode .mtabs a:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
@@ -283,7 +293,7 @@ html.tabmode .rail{position:static;max-height:none;margin:0;border:1px solid var
 html.tabmode .rail-head{padding:10px 14px}
 html.tabmode .rail-list{display:block;overflow:visible}
 html.tabmode .rail .x{display:block}
-html.tabmode .rr,html.tabmode .collapsed .rr{grid-template-columns:24px 62px minmax(0,1fr) 72px 64px 64px 66px 82px;gap:8px;min-width:0;width:100%;border-right:0;border-bottom:1px solid var(--line);padding:11px 14px;justify-items:stretch}
+html.tabmode .rr,html.tabmode .collapsed .rr{grid-template-columns:24px 62px minmax(0,1fr) 70px 64px 64px 68px 82px;gap:8px;min-width:0;width:100%;border-right:0;border-bottom:1px solid var(--line);padding:11px 14px;justify-items:stretch}
 html.tabmode .rr .rk,html.tabmode .rr .mid{display:grid}
 html.tabmode .rr .mid{gap:1px}
 html.tabmode .rr .mid .nm{font-size:12.5px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -300,15 +310,15 @@ html.tabmode .rail-foot{display:none}
 /* phones: the most useful columns; the expand button shows the full table */
 @media (max-width:640px){
   html.tabmode .mtabs a{font-size:13.5px;padding:9px 4px}
-  html.tabmode .rr,html.tabmode .collapsed .rr{grid-template-columns:20px minmax(54px,1fr) 38px 66px 60px 58px;gap:5px;padding:11px 8px}
-  html.tabmode .rr .vo,html.tabmode .rr .lt,html.tabmode .rr .mid .nm{display:none}
-  html.tabmode .rr .px{font-size:13px}
+  html.tabmode .rr,html.tabmode .collapsed .rr{grid-template-columns:20px minmax(52px,1fr) 38px 62px 64px 60px;gap:5px;padding:11px 8px}
+  html.tabmode .rr .px,html.tabmode .rr .lt,html.tabmode .rr .mid .nm{display:none}   /* 9 Nov: shares (volume) shows instead of price */
+  html.tabmode .rr .vo{font-size:13px}
   html.tabmode .rr.rr-cols span:nth-child(3),html.tabmode .rr.rr-cols span:nth-child(7),html.tabmode .rr.rr-cols span:nth-child(8){display:none}
   html.tabmode .rr.rr-cols span:nth-child(3){display:block;visibility:hidden}
   html.tabmode .rail-head .small{display:none}
 }
 /* phones held sideways: the sections become a slim menu down the left edge */
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){
   html.tabmode body{padding-left:calc(96px + env(safe-area-inset-left,0px))}
   html.tabmode .mtabs{position:fixed;left:0;top:0;bottom:0;width:96px;flex-direction:column;justify-content:center;margin:0;
     padding:calc(8px + env(safe-area-inset-top,0px)) 8px calc(8px + env(safe-area-inset-bottom,0px)) calc(8px + env(safe-area-inset-left,0px));border-bottom:0;border-right:1px solid var(--line)}
@@ -368,7 +378,7 @@ html.tabmode.menu-open .mast-menu{background:var(--fg);color:var(--bg);border-co
 html.tabmode .mseg{display:flex;flex:1;gap:2px;padding:4px;border-radius:13px;background:var(--chip);border:1px solid var(--line)}
 html.tabmode .mtabs a{border-radius:10px;color:var(--muted);font-weight:700}
 html.tabmode .mtabs a.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px color-mix(in srgb,var(--fg) 14%,transparent)}
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){
   html.tabmode .mseg{flex:none;flex-direction:column;background:none;border:0;padding:0;gap:6px}
   html.tabmode .mtabs a.on{background:var(--fg);color:var(--bg);box-shadow:none}
 }
@@ -396,7 +406,8 @@ html.tabmode .grab-note{text-align:left}
 @media (min-width:1024px) and (max-width:1180px) and (orientation:landscape){
   html:not(.tabmode) .split,html:not(.tabmode) .split.collapsed{grid-template-columns:440px minmax(0,1fr)}
   html:not(.tabmode) .rr{grid-template-columns:22px 64px minmax(0,1fr) 74px 66px 66px;gap:6px}
-  html:not(.tabmode) .rr .px,html:not(.tabmode) .rr .ch{display:block;text-align:right;font-size:13px}
+  html:not(.tabmode) .rr .vo,html:not(.tabmode) .rr .ch{display:block;text-align:right;font-size:13px}
+  html:not(.tabmode) .rr .px{display:none}
   html:not(.tabmode) .rr .ch{font-weight:700}
   html:not(.tabmode) .rr .pc{text-align:right}
   html:not(.tabmode) .rr.rr-cols{display:grid;padding-top:6px;padding-bottom:6px;border-bottom:1px solid var(--fg)}
@@ -515,7 +526,7 @@ html.tabmode[data-theme="dark"] .mast-opts .th-sun{display:none}
 html.tabmode[data-theme="dark"] .mast-opts .th-moon{display:block}
 html.tabmode[data-theme="light"] .mast-opts .th-sun{display:block}
 /* Round 10 (Youssef 6 Nov 16:09Z): a stock's full page uses the same phone and tablet layout (no empty side-menu gap sideways) */
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view=page] body{padding-left:env(safe-area-inset-left,0px)}}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view=page] body{padding-left:env(safe-area-inset-left,0px)}}
 html.tabmode .back-page{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px;text-decoration:none}
 /* Round 11 (Youssef 6 Nov 16:18Z): on upright phones the logo and the market status never sit under the clocks.
    The logo column keeps its own width; the clocks give way instead (smaller type, city name shortened with "…"). */
@@ -546,10 +557,15 @@ html.tabmode .back-page{display:inline-flex;align-items:center;gap:6px;min-heigh
 .mstrip{display:none}
 html.tabmode .mtabs{flex-wrap:wrap;row-gap:8px}
 html.tabmode .mstrip{display:flex;flex-basis:100%;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
-  scrollbar-width:none;padding:0 0 2px;margin:0;mask-image:linear-gradient(90deg,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent)}
+  scrollbar-width:none;padding:0 0 2px;margin:0}
+/* Youssef 10 Nov 02:30Z and 02:37Z: on iPhone (Safari and Chrome) old highlight colour stayed on the chips. iOS repaints a
+   scrolling row badly inside a blurred (backdrop-filter) sticky bar or under a mask, so the bars holding the row are now solid,
+   the right-edge fade is a sticky overlay instead of a mask, and each chip has its own layer so its colour is redrawn whole. */
+html.tabmode .mstrip::after{content:"";flex:none;position:sticky;right:0;width:28px;margin-left:-28px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--bg) 92%,transparent))}
 html.tabmode .mstrip::-webkit-scrollbar{display:none}
 html.tabmode .mstrip a{flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:4px 11px 4px 9px;border-radius:999px;
-  border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;font-size:13px;white-space:nowrap}
+  border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;font-size:13px;white-space:nowrap;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 html.tabmode .mstrip a b{font-weight:800;letter-spacing:.01em}
 html.tabmode .mstrip .ms-n{font-size:11px;font-weight:700;color:var(--muted);min-width:12px;text-align:right}
 html.tabmode .mstrip .swatch{width:8px;height:8px;border-radius:2px;background:var(--brand);display:inline-block}
@@ -558,7 +574,7 @@ html.tabmode .mstrip a.on{background:var(--fg);color:var(--bg);border-color:var(
 html.tabmode .mstrip a.on .ms-n{color:inherit;opacity:.7}
 html.tabmode .mstrip a:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:1px}
 /* phones held sideways keep their slim side menu, without the row */
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode .mstrip{display:none}}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){html.tabmode .mstrip{display:none}}
 /* Round 15 (Youssef 6 Nov 17:12Z): on a stock (its view and its full page), phones and tablets upright keep the header
    (logo, status, clocks, "i", menu and its row), the section tabs and the Top 20 row pinned at the top while scrolling. */
 .mast-fix{display:contents}
@@ -569,7 +585,7 @@ html.tabmode .mstrip a:focus-visible{outline:3px solid color-mix(in srgb,var(--o
   html.tabmode[data-view] .mtabs{top:var(--mast-h,0px)}
 }
 html.tabmode .mtabs-page{display:flex}
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view=page] body{padding-left:calc(96px + env(safe-area-inset-left,0px))}}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view=page] body{padding-left:calc(96px + env(safe-area-inset-left,0px))}}
 html.tabmode .mtabs-page,html.tabmode .mtabs-page .mstrip{min-width:0;max-width:calc(100% + 2 * var(--gutter))}
 /* Round 17 (Youssef 6 Nov 17:26Z): the stock's full-page link is a small button beside its "<TICKER> News" heading */
 .srcbox .sec .full-link{order:2;margin-left:auto;align-self:center;display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:999px;
@@ -582,15 +598,16 @@ html.tabmode .mtabs-page,html.tabmode .mtabs-page .mstrip{min-width:0;max-width:
 html.tabmode .focus-body .row-wrap:has(> .mkt-back:only-child){display:none}
 /* Round 20 (Youssef 6 Nov 17:42Z): phones held sideways get the same stock fixes: the Top 20 row (pinned at the top of the page,
    beside the side menu), the pinned header on a stock, and the News-heading landings. */
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){
   html.tabmode .mstrip.ms-side{display:flex;position:sticky;top:0;z-index:7;margin:0 calc(-1 * var(--gutter));padding:8px var(--gutter);
-    background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);mask-image:none;-webkit-mask-image:none}
+    background:var(--bg);border-bottom:1px solid var(--line);mask-image:none;-webkit-mask-image:none}
+  html.tabmode .mstrip.ms-side::after{display:none}
   html.tabmode[data-view] .mast-fix{display:block;position:fixed;top:0;right:0;left:calc(96px + env(safe-area-inset-left,0px));z-index:20;
     background:var(--surface);padding-top:env(safe-area-inset-top,0px)}
   html.tabmode[data-view] .mast{padding-top:var(--mast-h,0px)}
   html.tabmode[data-view] .mstrip.ms-side{top:var(--mast-h,0px)}
 }
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view] .mast-fix .tagline{display:none}html.tabmode[data-view] .mast-fix .mast-top{padding-top:8px;padding-bottom:8px}}
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){html.tabmode[data-view] .mast-fix .tagline{display:none}html.tabmode[data-view] .mast-fix .mast-top{padding-top:8px;padding-bottom:8px}}
 /* round 21: tablet upright, Markets fills the gaps: Breadth beside QQQ, then Sectors and Rule-based side by side */
 @media (min-width:700px) and (max-width:1180px) and (orientation:portrait){
   .conds{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -599,12 +616,7 @@ html.tabmode .focus-body .row-wrap:has(> .mkt-back:only-child){display:none}
 }
 /* round 22: no "Overall market and Top 20" line and no Grab hours note; empty lines take no space */
 .viewing:empty,.grab-note:empty{display:none}
-/* round 23/24: a small up arrow centred between the "<TICKER> News" title and Full page / Exit full screen */
-.srcbox .sec:has(.up-btn) h2{order:1;flex:0 1 auto;min-width:0}
-.srcbox .sec:has(.up-btn) .up-btn{order:2;margin:0 auto;align-self:center}
-.srcbox .sec:has(.up-btn) .full-link{order:3;margin-left:0}
-.srcbox .sec:has(.up-btn) .srcsel{order:4;flex-basis:100%}
-.srcbox .sec:has(.up-btn) .meta{order:5}
+/* the round button style, used by the down arrow beside Back to Top 20 */
 .up-btn{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;padding:0;border-radius:999px;border:1.5px solid var(--line);
   background:var(--surface);color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s}
 .up-btn svg{width:13px;height:13px}
@@ -623,7 +635,7 @@ html.tabmode[data-view=stock] .panel>.back-row{display:flex;justify-self:start}
 .grab-btn .gb-c::before{content:" — "}
 .lock-btn{display:inline-flex;align-items:center;gap:6px}.lock-ic{flex:none}
 /* phones and tablets upright, and phones sideways (Youssef 6 Nov 22:05Z): the events strip, Grab and Lock share one row under the title */
-@media (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+@media (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){
   html.tabmode .titlebar{grid-template-areas:"title upd" "econ grab"}
   html.tabmode .titlebar>.econ{min-width:0;width:auto;max-width:none;margin:0;flex-direction:row;justify-content:center;padding:6px 10px;min-height:46px;border-radius:12px}
   html.tabmode .econ .ev-row{flex-wrap:nowrap;justify-content:center;gap:8px;min-width:0;width:100%}
@@ -647,7 +659,7 @@ html.tabmode[data-view=stock] .panel>.back-row{display:flex;justify-self:start}
   html.tabmode .grab-timer,html.tabmode .grab-note{flex-basis:100%;text-align:right;contain:inline-size}   /* the notes never widen the row */
   html.tabmode .econ .ev-sub{display:none}   /* one line; the figures and state stay in the i card and the dot */
 }
-@media (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){html.tabmode .titlebar>.econ,html.tabmode .grab{align-self:start}}
+@media (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){html.tabmode .titlebar>.econ,html.tabmode .grab{align-self:start}}
 /* phones upright: shorter Grab words, and the event as time over name so the name has room */
 @media (orientation:portrait) and (max-width:640px){
   html.tabmode .econ .ev-k{display:none}
@@ -699,7 +711,7 @@ animation:ib-pop .35s ease-out}
 .home-link{display:inline-block;line-height:0;border-radius:6px;color:inherit;text-decoration:none}
 .home-link:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 /* phones sideways (Youssef 6 Nov 22:05Z): Markets fills the gaps like a tablet upright, Breadth beside QQQ, then Sectors and Rule-based side by side */
-@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){
   html.tabmode .conds{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
   html.tabmode .conds .grid.tiles,html.tabmode .conds .grid.sumcards{display:contents}
   html.tabmode .conds .sumcards>.card{grid-column:span 2}
@@ -707,7 +719,7 @@ animation:ib-pop .35s ease-out}
 /* Tablets held sideways (iPad mini 1133 x 744; Youssef 6 Nov 22:21Z): the phone-sideways layout (side menu, "i" panel,
    burger, pinned header and Top 20 row, filters, full-screen buttons), sized up and squared off for the bigger screen:
    the updates in one row level with the title, and the events strip, Grab and Lock one height on the next row */
-@media (orientation:landscape) and (min-width:1024px) and (max-width:1194px) and (max-height:900px){
+@media (orientation:landscape) and (min-width:900px) and (max-width:1194px) and (max-height:900px){
   html.tabmode .titlebar{gap:14px 14px}
   html.tabmode .updates{grid-template-columns:repeat(4,auto);gap:8px;grid-row:1;grid-column:1 / -1;justify-self:end}   /* the row of 4 does not narrow the events strip below */
   html.tabmode .titlebar>div:first-child{grid-row:1;grid-column:1 / -1}
@@ -785,3 +797,127 @@ transform:translateX(-130%);animation:ai-flash 4.8s cubic-bezier(.3,.6,.3,1) inf
   html.tabmode .title{font-size:clamp(20px,6.4vw,27px);line-height:1.08}
   html.tabmode .titlebar .kicker{font-size:clamp(9.5px,2.9vw,12px);white-space:nowrap}
 }
+/* Youssef 9 Nov 19:24Z: "Market" is no longer a row in the Top 20. A World News button (his globe icon) opens the
+   overall market news instead: an icon next to the "i" on phones and tablets, an icon + label beside Light / dark on
+   computers. The clock box on phones and tablets is only as wide as its content. */
+.mast-news{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap}
+.mast-news:hover{color:var(--fg)}   /* no pink link hover, so a tapped-off globe goes straight back to normal */
+@media (hover:hover){.mast-news:hover{border-color:var(--orange)}}
+.mast-news:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.mn-ic{display:block;width:20px;height:20px;flex:none;background:currentColor;-webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;mask:url(data:image/png;base64,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) center/contain no-repeat}
+html .mast-news.on .mn-ic{background:var(--orange)}   /* on: only the globe itself turns yellow (Youssef 9 Nov) */
+html.tabmode .mast-news{order:2;width:36px;height:36px;min-height:0;padding:0;border-radius:50%;justify-content:center;flex:none}
+html.tabmode .mast-news .mn-lab{display:none}
+html.tabmode .mast-news .mn-ic{width:22px;height:22px}
+html.tabmode .mast-tools{justify-self:end;gap:8px;flex-wrap:nowrap}
+html.tabmode .clocks{width:max-content;max-width:100%}
+@media (max-width:640px){
+  html.tabmode .mast-tools{justify-self:end;gap:6px}
+  html.tabmode .clocks{grid-template-columns:auto auto;column-gap:10px;padding:2px 8px}
+  html.tabmode .clocks .clk-time{font-size:12.5px}
+  html.tabmode .mast-news{width:32px;height:32px}
+  html.tabmode .mast-news .mn-ic{width:20px;height:20px}
+}
+@media (max-width:400px){html.tabmode .mast-news{width:30px;height:30px}html.tabmode .mast-news .mn-ic{width:18px;height:18px}}
+
+/* Top 20 column order and sort switch (Youssef 9 Nov 20:33Z). Rail headers may wrap ("Shares (Volume)").
+   Full-screen view only: "Sort" beside the close button shows an arrow on each column; off = default ranking. */
+.rr.rr-cols span{line-height:1.2}
+.t20-modal .sec .t20-sort{order:2;margin-left:auto;align-self:center;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;
+  border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);font:inherit;font-size:13px;font-weight:700;cursor:pointer;transform:translateY(-3px)}
+.t20-modal .sec .t20-sort + .t20-close{margin-left:8px}
+.t20-modal .sec .t20-sort .sl{white-space:nowrap}
+@media (hover:hover){.t20-modal .sec .t20-sort:hover{border-color:var(--orange)}}
+.t20-modal .sec .t20-sort.on{border-color:var(--orange);background:color-mix(in srgb,var(--orange) 14%,var(--surface))}
+.t20-modal .sec .t20-sort.on svg{color:var(--orange-ink)}
+.t20-modal .sec .t20-sort:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+.t20-tbl th .sb{all:unset;display:inline-flex;align-items:center;gap:4px;cursor:default;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit}
+.t20-tbl th:not(.l) .sb{flex-direction:row-reverse}
+.t20-tbl .sa{display:none;font-size:10px;line-height:1;color:var(--muted)}
+.t20-tbl.sorting th .sb{cursor:pointer}
+.t20-tbl.sorting th .sb:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:4px}
+.t20-tbl.sorting .sa{display:inline-block}
+.t20-tbl.sorting .sa::before{content:"\2195"}
+.t20-tbl.sorting th[aria-sort=descending] .sa::before{content:"\25BC"}
+.t20-tbl.sorting th[aria-sort=ascending] .sa::before{content:"\25B2"}
+.t20-tbl.sorting th[aria-sort=descending],.t20-tbl.sorting th[aria-sort=ascending]{color:var(--fg)}
+.t20-tbl.sorting th[aria-sort=descending] .sa,.t20-tbl.sorting th[aria-sort=ascending] .sa{color:var(--orange-ink)}
+@media (max-width:640px){.t20-modal .sec .t20-sort{height:30px;padding:0 10px;font-size:12px}}
+
+/* Computers and the iPad Pro held sideways (Youssef 9 Nov 20:47Z): the header (logo, clocks, World News, Light / dark) and the
+   market status line under it stay pinned at the top while scrolling, as on phones and tablets. The page script moves #dateline
+   into #mast-dl; --mast-h is the pinned height. */
+.mast-dl:empty{display:none}
+html:not(.tabmode) .mast-fix{display:block;position:fixed;top:0;left:0;right:0;z-index:20;background:var(--surface);
+  padding-top:env(safe-area-inset-top,0px);box-shadow:0 1px 0 var(--line)}
+html:not(.tabmode) .mast{padding-top:var(--mast-h,0px)}
+html:not(.tabmode){scroll-padding-top:calc(var(--mast-h,0px) + 8px)}
+html:not(.tabmode) .mast-dl .dateline{margin:0;padding-top:14px}
+html:not(.tabmode) .rail{top:calc(var(--mast-h,0px) + 12px);max-height:calc(100vh - var(--mast-h,0px) - 24px)}
+html:not(.tabmode) .dstrip{top:var(--mast-h,0px)}
+html.tabmode .mast-dl{display:none}
+/* Youssef 9 Nov 20:51Z: "Top 20" stays on one line beside its expand button at every width (it broke as "Top / 20" on the
+   iPad Pro and narrower desktop windows); the ranking note takes the rest of the row and wraps instead. */
+.rail-head .rh-l{flex:none}
+.rail-head .news{white-space:nowrap}
+.rail-head .small{min-width:0;flex:1 1 auto}
+/* Youssef 9 Nov 20:58Z: below 1400 px wide (iPad Pro held sideways and screens of that size) the clocks cover the end of
+   "Independent Investment & Strategic Growth"; there is no room to show it readably, so it is hidden there. Wider screens keep it. */
+@media (max-width:1399px){html:not(.tabmode) .tagline{display:none}}
+/* Desktop full stock page (Youssef 9 Nov 22:41Z): the Top 20 row is pinned in the header under the Market Open line, and the
+   AI switch's three icons slide into the middle of the header once the switch itself has scrolled out of view. */
+html.ds-pin:not(.tabmode) .mast-dl .dstrip{position:static;margin:0 calc(-1 * clamp(24px,2.2vw,44px));padding:8px clamp(24px,2.2vw,44px) 10px;
+  background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;border-top:0}
+html.ds-pin:not(.tabmode) .mast-dl .dateline{padding-bottom:8px}
+html.ds-pin:not(.tabmode) .wrap > #news{min-height:calc(100vh - var(--mast-h,0px) - 16px)}
+.mast-ai{display:none}
+html .mast-ai{display:inline-flex;align-items:center;gap:3px;position:absolute;top:50%;z-index:3;padding:3px;border:1px solid var(--line);
+  border-radius:999px;background:var(--surface);box-shadow:0 6px 18px color-mix(in srgb,var(--fg) 12%,transparent);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-50%) translateY(14px) scale(.86);
+  transition:opacity .32s ease,transform .42s cubic-bezier(.2,.8,.2,1),visibility 0s linear .42s}
+html.ai-mini .mast-ai{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,-50%);
+  transition:opacity .32s ease,transform .42s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.mast-ai button{display:inline-grid;place-items:center;width:34px;height:30px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;
+  transition:background .2s,color .2s}
+html .mast-top .mast-ai button img{width:20px;height:20px;border-radius:6px;display:block;box-shadow:0 0 0 1px var(--line)}
+.mast-ai .ai-off-ic{width:19px;height:19px}
+@media (hover:hover){.mast-ai button:hover{background:var(--chip)}}
+.mast-ai button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+html .mast-top .mast-ai button[aria-pressed="true"] img{box-shadow:none}
+.mast-ai button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+html .tagline{transition:opacity .3s ease}
+html.ai-mini.ai-cover-tag .tagline{opacity:0}
+html.menu-open .mast-ai{display:none}
+/* phones: no room beside the clocks, so the icons take the market-status line under the logo while shown */
+html.ai-mini-sm .mast-ai{gap:2px;padding:2px;box-shadow:0 3px 10px color-mix(in srgb,var(--fg) 10%,transparent)}
+html.ai-mini-sm .mast-ai button{width:26px;height:20px}
+html.ai-mini-sm .mast-top .mast-ai button img{width:15px;height:15px;border-radius:4px}
+html.ai-mini-sm .mast-ai .ai-off-ic{width:15px;height:15px}
+html .mast-status{transition:opacity .3s ease,transform .3s ease}
+html.tabmode.ai-mini.ai-cover-tag:not(.ai-mini-sm) .mast-status{transform:translateY(var(--tag-up,0px))}
+html.ai-mini.ai-mini-sm .mast-status{opacity:0}
+@media (prefers-reduced-motion:reduce){html .mast-ai,html.ai-mini .mast-ai{transition:none}}
+
+/* Youssef 10 Nov 00:24Z: Full page / Exit full screen at the top: right of the down arrow, or on the stock's title card (computer dashboard) */
+.full-link.fl-top{display:inline-flex;align-items:center;min-height:32px;padding:4px 13px;border-radius:999px;background:var(--orange);color:#1A1205;
+  font-size:12.5px;font-weight:700;text-decoration:none;white-space:nowrap;flex:none}
+.full-link.fl-top:hover{filter:brightness(1.06)}
+.full-link.fl-top:focus-visible{outline:3px solid color-mix(in srgb,var(--orange) 55%,transparent);outline-offset:2px}
+.full-link.fl-card{margin-left:auto;align-self:center}
+html.tabmode .full-link.fl-card{display:none}
+
+/* Youssef 10 Nov 00:49Z: the stock's logo square (its own colour, ticker inside) beside the % change */
+.tk-logo{display:inline-grid;place-items:center;flex:none;margin-left:12px;font-family:Inter,system-ui,sans-serif;font-weight:800;letter-spacing:.01em;line-height:1;
+  border-radius:12px;box-shadow:inset 0 0 0 1px color-mix(in srgb,#fff 18%,transparent),0 2px 6px color-mix(in srgb,var(--fg) 16%,transparent);user-select:none}
+.tk-m,.tk-l{width:70px;height:70px;border-radius:18px;font-size:21px}
+.tk-m.tk-n4,.tk-l.tk-n4{font-size:18px}
+.tk-m.tk-n5,.tk-l.tk-n5{font-size:14.5px}
+.tk-m.tk-n1,.tk-m.tk-n2,.tk-l.tk-n1,.tk-l.tk-n2{font-size:27px}
+@media (max-width:599px){.tk-m,.tk-l{width:58px;height:58px;border-radius:15px;font-size:17.5px}.tk-m.tk-n4,.tk-l.tk-n4{font-size:15px}.tk-m.tk-n5,.tk-l.tk-n5{font-size:12px}.tk-m.tk-n1,.tk-m.tk-n2,.tk-l.tk-n1,.tk-l.tk-n2{font-size:21px}}
+/* the price, % change and logo stay together and sit centred against the stock's name */
+.row-wrap:has(> .px-grp){align-items:center!important;column-gap:16px!important}
+.px-grp{display:inline-flex;align-items:center;flex:none}
+/* the company's own icon inside the square (Massive branding) */
+.tk-logo.tk-img{background:#fff;overflow:hidden;padding:0}
+.tk-logo.tk-img img{width:100%;height:100%;object-fit:contain;display:block}
+.tk-logo.tk-img.tk-wide{padding:7px;box-sizing:border-box}
