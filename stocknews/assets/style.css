@@ -3,10 +3,9 @@
 :root[data-theme="dark"]{--bg:#020817;--surface:#0B1222;--band:#14111C;--fg:#F1F5F9;--muted:#94A3B8;--line:#1E293B;--chip:#111A2E;--orange-ink:#FFB347;--pink-ink:#FF6B8B;--new-bg:#3A0F1C;--major-bg:#2A1C08;--major-fg:#FFC170;--up:#4ADE9B;--down:#FF6B8B;--ai:#171B3A;--ai-ink:#B4B8FF;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--fg)}
-body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%}
-/* Youssef 10 Nov 14:07Z: iPhone turned sideways and back kept the wrong layout. Nothing may make the page wider than the
-   screen (iOS then zooms out and keeps it), so the page itself clips sideways (on html, so sticky bars keep working). */
-html{overflow-x:hidden}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%;overflow-x:hidden}
+/* Youssef 10 Nov 14:07Z: nothing may make the page wider than the screen (iOS then zooms out and keeps it); the Markets
+   tile label wraps on phones. Clipping moved back from html to body on 10 Nov 21:19Z (as before PR #56). */
 a{color:inherit}
 a:hover{color:var(--pink-ink)}
 button{font:inherit;color:inherit;cursor:pointer}
